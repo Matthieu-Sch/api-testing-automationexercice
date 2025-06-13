@@ -1,6 +1,8 @@
 # api-testing-automationexercice
 Tests API réalisés avec Postman sur le site AutomationExercice.
+
 ---------------------------------------------------------------
+
 # API Testing – AutomationExercise.com
 
 Ce projet présente une **batterie de tests API** réalisés avec **Postman** sur le site [automationexercise.com](https://www.automationexercise.com), utilisé comme plateforme d'entraînement au test d'API.
