@@ -1,0 +1,15 @@
+{
+  "name": "cypress-ui-tests",
+  "version": "1.0.0",
+  "description": "Tests ui Cypress 'automationexercice'\"",
+  "main": "index.js",
+  "author": "\"author\": \"Matthieu S. <matthieu.scherer@me.com> (https://github.com/Matthieu-Sch)\"",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "cy:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^14.4.1"
+  }
+}
