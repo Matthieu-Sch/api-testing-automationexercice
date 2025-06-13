@@ -29,25 +29,26 @@ Ce projet présente une **batterie de tests API** réalisés avec **Postman** su
 
 ## Scénarios testés
 
-| Fonctionnalité testée         | Méthode | Endpoint                           | Statut attendu |
-|------------------------------|---------|------------------------------------|----------------|
-| Liste des produits           | GET     | `/api/productsList`                | 200 OK         |
-| Création d’un utilisateur    | POST    | `/api/createAccount`               | 201 Created    |
-| Connexion utilisateur        | POST    | `/api/verifyLogin`                 | 200 OK         |
-| Suppression d’un utilisateur | DELETE  | `/api/deleteAccount`               | 200 OK         |
-| Détails produit              | GET     | `/api/productDetails`              | 200 OK         |
-| Catégories produits          | GET     | `/api/categories`                  | 200 OK         |
+| Fonctionnalité testée            | Méthode | Endpoint                                          | Statut attendu |
+|----------------------------------|---------|---------------------------------------------------|----------------|
+| Liste des produits               | GET     | `/api/productsList`                               | 200 OK         |
+| Création d’un utilisateur        | POST    | `/api/createAccount`                              | 201 Created    |
+| Connexion utilisateur            | POST    | `/api/verifyLogin`                                | 200 OK         |
+| Suppression d’un utilisateur     | DELETE  | `/api/deleteAccount`                              | 200 OK         |
+| Recherche produits               | GET     | `/api/searchProduct`                              | 200 OK         |
+| Modification infos utilisateur   | PUT     | `/api/updateAccount`                              | 200 OK         |
+| Afficher infos utilisateur       | GET     | `/api/getUserDetailByEmail?email={{email}}`       | 200 OK         |
+| Suppression de l'utilisateur     | DELETE  | `/api/deleteAccount`                              | 200 OK         |
 
 **Ajout d’assertions Postman** sur :
 - Le **code HTTP** de la réponse
 - Le **contenu du JSON retourné**
-- Les **temps de réponse**
 
 ---
 
 ## Automatisation
 
-- Tests organisés en **collections** : login, brands, products, users
+- Tests organisés en dossiers au sein d'une collection : products, brands, search, auth, users
 - Utilisation de **variables globales** (email, token) pour enchaîner les appels
 - Automatisation avec **Collection Runner** pour exécution en série
 - Définition de **pré-requêtes** et de **scripts de test** pour vérification automatique
