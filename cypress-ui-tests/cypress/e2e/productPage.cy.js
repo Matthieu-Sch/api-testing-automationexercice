@@ -17,7 +17,7 @@ describe("Product page", () => {
       .its("length")
       .should("be.greaterThan", 10);
   });
-  it.only("Product detail display informations", () => {
+  it("Product detail display informations", () => {
     // On navigue vers la page des produits (".products").
     cy.get(navItems).contains("Products").click();
     cy.url().should("include", "/products");
