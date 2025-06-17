@@ -1,15 +1,11 @@
 describe("Register user", () => {
   const uniqueId = Math.floor(Math.random() * 1000);
   const navItems = "ul.nav.navbar-nav li a";
-  const userName = `User_${uniqueId}`;
-  const userEmail = `${userName}@testscypress.com`;
+  const username = `User_${uniqueId}`;
+  const userEmail = `${username}@testscypress.com`;
   // Avant chaque nouveau test, on revient à la page "Home".
   beforeEach(() => {
-    cy.visit("/");
-    // On vérifie que l'on est bien sur la page "Home" en regardant si "Home" est bien en orange dans la barre de navigation.
-    cy.get(navItems)
-      .contains("Home")
-      .should("have.attr", "style", "color: orange;");
+    cy.homePage();
   });
   it("Successfully signup and deletes the user account", () => {
     // On vérifie que la barre de navigation contient bien 8 items parmi lesquels on trouve "Signup / Login" puis on clic dessus.
@@ -25,8 +21,8 @@ describe("Register user", () => {
       .contains(/New user signup!/i)
       .should("be.visible");
     // On rempli les inputs name et email puis on clic sur "Signup".
-    cy.get('[data-qa="signup-name"]').type(userName);
-    cy.log(userName);
+    cy.get('[data-qa="signup-name"]').type(username);
+    cy.log(username);
     cy.get('[data-qa="signup-email"]').type(userEmail);
     cy.log(userEmail);
     cy.get('[data-qa="signup-button"]').contains("Signup").click();
@@ -37,7 +33,7 @@ describe("Register user", () => {
     cy.get("h2.title b").contains(/Enter account information/i);
     // On remplit les champs d'inscription
     cy.get("#id_gender1").check();
-    cy.get('[data-qa="name"]').should("have.value", userName);
+    cy.get('[data-qa="name"]').should("have.value", username);
     cy.get('[data-qa="email"]').should("have.value", userEmail);
     cy.get('[data-qa="password"]').type("testcypress");
     cy.get('[data-qa="days"]').select("2");
@@ -83,7 +79,7 @@ describe("Register user", () => {
       .invoke("text")
       .then((text) =>
         expect(text.trim().replace(/\s+/g, " ")).to.include(
-          `Logged in as ${userName}`
+          `Logged in as ${username}`
         )
       );
     // On vérifie qu'il y ai bien le bouton "Delete account" et on clic dessus.
@@ -99,7 +95,7 @@ describe("Register user", () => {
       .and("have.text", "Account Deleted!");
     cy.get('[data-qa="account-deleted"]')
       .next()
-      .should("have.text.text", "Your account has been permanently deleted!");
+      .should("have.text", "Your account has been permanently deleted!");
     // On clic sur "Continue" puis on vérifie qu'on est bien redirigé vers la pahe d'accueil (Home").
     cy.get('[data-qa="continue-button"]').click();
     // On vérifie que la barre de navigation est bien la même que lorsque l'on est pas connecté.
@@ -107,5 +103,27 @@ describe("Register user", () => {
       .should("have.length", 8)
       .contains("Home")
       .should("have.attr", "style", "color: orange;");
+  });
+  it("Register with an existing email", () => {
+    // On se crée un compte pour être sûr que l'e-mail utilisé existe déjà
+    cy.registerAndLogout(username, userEmail);
+    // On clic sur le bouton "Signup / Login".
+    cy.contains("Signup / Login").click();
+    // On vérifie que la redirection est correcte
+    cy.url().should("include", "/login");
+
+    // On repaire le formulaire d'inscription
+    cy.get(".signup-form h2").should("have.text", "New User Signup!");
+    // On remplit les champs du formulaires
+    cy.get("[data-qa='signup-name']").type(username);
+    cy.log(username);
+    cy.get("[data-qa='signup-email']").type(userEmail);
+    cy.log(userEmail);
+    cy.get("[data-qa='signup-button']").click();
+
+    // On vérifie si le message d'erreur et visible et qu'il affiche le bon message.
+    cy.get(".signup-form > form > p")
+      .should("be.visible")
+      .and("have.text", "Email Address already exist!");
   });
 });
